@@ -4,9 +4,9 @@ import frc.robot.subsystems.Pneumatics;
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
 public class AirActuators extends InstantCommand{
-	boolean actuator0 = false;	//initial state for jaws up
-	boolean actuator1 = false;  //initial state for open jaw
-	boolean actuator2 = false;  //initial state for buddy bar
+	boolean liftFront = true;	//initial state for front lift pnumatics
+	boolean liftRear = true;	//initial state for rear lift pnumatics
+	boolean gearGrabber = true; //initial state for gear grabber open
 	int actNumber;
 
 	public AirActuators(int actNum) {
@@ -19,39 +19,40 @@ public class AirActuators extends InstantCommand{
 		switch (actNumber) {
 		
 		case 0:
-			if(actuator0 == true) {
-				Pneumatics.one.set(true);
-				Pneumatics.two.set(false);
-				actuator0 = false;
-			}
-			else {
+			if(liftFront == true) {
 				Pneumatics.one.set(false);
 				Pneumatics.two.set(true);
-				actuator0 = true;
+				liftFront = false;
+			}
+			else {
+				Pneumatics.one.set(true);
+				Pneumatics.two.set(false);
+				liftFront = true;
 			}
 			break;
 		case 1:
-			if(actuator1 == true){
+			if(liftRear == true){
 				Pneumatics.three.set(false);
 				Pneumatics.four.set(true);
-				actuator1 = false;
+
+				liftRear = false;
 			}
 			else {
 				Pneumatics.three.set(true);
 				Pneumatics.four.set(false);
-				actuator1 = true;
+				liftRear = true;
 			}
 			break;
 		case 2:
-			if(actuator2 == true) {
+			if(gearGrabber == true) {
 				Pneumatics.five.set(true);
 				Pneumatics.six.set(false);
-				actuator2 = false;
+				gearGrabber = false;
 			}
 			else {
 				Pneumatics.five.set(false);
 				Pneumatics.six.set(true);
-				actuator2 = true;
+				gearGrabber = true;
 			}
 			break;
 		default:

@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.InstantCommand;
 
@@ -12,7 +12,7 @@ public class LiftCounterReset  extends InstantCommand{
 
 	
 	protected void execute() {
-		Robot.rm.BoxSwitch.reset();
+		RobotMap.BoxSwitch.reset();
 		taskDone = true;
 	}
 	@Override

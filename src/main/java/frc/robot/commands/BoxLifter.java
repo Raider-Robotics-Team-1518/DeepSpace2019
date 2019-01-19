@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.Robot;
+import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -21,32 +22,32 @@ public class BoxLifter extends Command {
 
 	protected void execute() {
 		if (Robot.isTestBot == true) {
-			if ((mDir == true) && (Robot.rm.BoxSwitch.get() < maxcount)) {
-				Robot.rm.testLift.set(1);
+			if ((mDir == true) && (RobotMap.BoxSwitch.get() < maxcount)) {
+				RobotMap.testLift.set(1);
 			}
-			else if ((mDir == false)) {  // && (Robot.rm.BoxSwitch.get() > mincount)) {
-				Robot.rm.testLift.set(-1);
+			else if ((mDir == false)) {  // && (RobotMap.BoxSwitch.get() > mincount)) {
+				RobotMap.testLift.set(-1);
 			}
 			else {
-			Robot.rm.testLift.set(0);
+			RobotMap.testLift.set(0);
 			}
 		}
 		else {
-			if ((mDir == true)  && (Robot.rm.BoxSwitch.get() <= maxcount)) {
-				Robot.rm.lift.set(1);
+			if ((mDir == true)  && (RobotMap.BoxSwitch.get() <= maxcount)) {
+				RobotMap.lift.set(1);
 			}
-			else if ((mDir == false) && (Robot.rm.BoxSwitch.get() > mincount)) {
-				Robot.rm.lift.set(-1);
+			else if ((mDir == false) && (RobotMap.BoxSwitch.get() > mincount)) {
+				RobotMap.lift.set(-1);
 				}
 			else {
-			Robot.rm.lift.set(0);
+			RobotMap.lift.set(0);
 			}
 		}
 	}
 
 	protected void end() {
-		Robot.rm.lift.set(0);
-		Robot.rm.testLift.set(0);
+		RobotMap.lift.set(0);
+		RobotMap.testLift.set(0);
 	}
 	@Override
 	protected boolean isFinished() {

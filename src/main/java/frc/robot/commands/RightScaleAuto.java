@@ -86,7 +86,7 @@ public class RightScaleAuto extends Command{
 
     public void stop() {
 		System.out.println("Auto Mode 6 Stopped");
-    	Robot.m_drive.driveCartesian(0, 0, 0);
+    	Robot.d_drive.arcadeDrive(0, 0);
     	taskDone = true;
     	
     }

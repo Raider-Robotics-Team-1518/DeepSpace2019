@@ -59,7 +59,7 @@ public class MiddleSwitchNoDropAuto extends Command {
 
     public void stop() {
 		System.out.println("Test Drive Stopped");
-    	Robot.m_drive.driveCartesian(0, 0, 0);
+    	Robot.d_drive.arcadeDrive(0, 0);
     	taskDone = true;
     	
     }

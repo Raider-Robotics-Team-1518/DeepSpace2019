@@ -12,6 +12,7 @@ public class Pneumatics extends Subsystem{
 	public static final Solenoid four = RobotMap.solenoid3;
 	public static final Solenoid five = RobotMap.solenoid4;
 	public static final Solenoid six = RobotMap.solenoid5;
+
 	
 	public Pneumatics() {
 		// TODO Auto-generated constructor stub

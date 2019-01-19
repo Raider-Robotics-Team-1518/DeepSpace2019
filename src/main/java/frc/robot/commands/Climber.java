@@ -1,14 +1,14 @@
 package frc.robot.commands;
 
-import frc.robot.Robot;
+import frc.robot.RobotMap;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+//import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.command.Command;
 
 public class Climber extends Command {
 	
-	WPI_TalonSRX climbMotor = Robot.rm.climb;
+	//WPI_TalonSRX climbMotor = RobotMap.climb;
 	boolean mDir;
 	
 	public Climber(boolean motorDir) {
@@ -18,18 +18,18 @@ public class Climber extends Command {
 
 	protected void execute() {
 		if ((mDir == true)) {
-			Robot.rm.climb.set(1);
+			RobotMap.climb.set(1);
 		}
 
 		else if ((mDir == false)) {
-			Robot.rm.climb.set(-1);
+			RobotMap.climb.set(-1);
 		}
 		else {
-		Robot.rm.climb.set(0);
+		RobotMap.climb.set(0);
 		}
 	}
 	protected void end() {
-		Robot.rm.climb.set(0);
+		RobotMap.climb.set(0);
 	}
 	@Override
 	protected boolean isFinished() {

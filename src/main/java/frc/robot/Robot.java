@@ -16,9 +16,9 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.UsbCamera;
-import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 /**
@@ -36,7 +36,7 @@ public class Robot extends TimedRobot {
   public static Pneumatics pn;
   
   //Hardware
-  public static MecanumDrive m_drive;
+  public static DifferentialDrive d_drive;
   public static UsbCamera cam0;
   public static AxisCamera cam1;
 
@@ -68,81 +68,75 @@ public class Robot extends TimedRobot {
    */
   @SuppressWarnings({ "unchecked", "rawtypes" })
   public void robotInit() {
-    //oi = new OI();
+    oi = new OI();
     //rm = new RobotMap();
-    rm.init();
+    oi.init();
+    //rm.init();
     pn = new Pneumatics();
     
-    rm.comp0.setClosedLoopControl(true);
-    if (isTestBot == true) {
+    RobotMap.comp0.setClosedLoopControl(true);
+    /*if (isTestBot == true) {
       m_drive = new MecanumDrive(rm.testdriveTrainFrontLeftWheel, rm.testdriveTrainRearLeftWheel, rm.testdriveTrainFrontRightWheel, rm.testdriveTrainRearRightWheel);
     }
     else {
       m_drive = new MecanumDrive(rm.driveTrainFrontLeftWheel, rm.driveTrainRearLeftWheel, rm.driveTrainFrontRightWheel, rm.driveTrainRearRightWheel);
-    }
+    } */
+    d_drive = new DifferentialDrive(RobotMap.left_drive, RobotMap.right_drive);
     
       RobotMap.dio8.set(true);
       RobotMap.dio9.set(true);
-      rm.rioGyro.calibrate();
-      rm.encoderLRear.reset();
-      rm.encoderRRear.reset();
+      RobotMap.rioGyro.calibrate();
+      RobotMap.encoderLRear.reset();
+      RobotMap.encoderRRear.reset();
       turbo=false;
       boxSwitch = 1;
-      rm.BoxSwitch.reset();
+      RobotMap.BoxSwitch.reset();
       
       //Camera setup
-      /*cam0 = CameraServer.getInstance().startAutomaticCapture();
+      cam0 = CameraServer.getInstance().startAutomaticCapture();
       cam0.setResolution(160, 120);
       cam0.setFPS(15);
-      cam0.setBrightness(35);  */
+      cam0.setBrightness(35);  
       cam1 = CameraServer.getInstance().addAxisCamera("10.15.18.100");
       cam1.setResolution(320, 240);
       cam1.setBrightness(40);
 
       //Get Alliance from FMS
-      //alliance = DriverStation.getInstance().getAlliance().toString();
-      //SmartDashboard.putString("Alliance", alliance);
+      alliance = DriverStation.getInstance().getAlliance().toString();
+      SmartDashboard.putString("Alliance", alliance);
       
       // instantiate the command used for the autonomous period
       m_chooser = new SendableChooser();
-      m_chooser.addDefault("No Auto", null);
-      m_chooser.addObject("Only Cross Line", new CrossLineOnlyAuto());
-      m_chooser.addObject("Opposite Switch No Drop", new MiddleSwitchNoDropAuto());
-      m_chooser.addObject("Home Switch From Middle", new MiddleSwitchAuto());
-      m_chooser.addObject("Robot Left (Switch)", new LeftSwitchAuto());
-      m_chooser.addObject("Robot Right (Switch)", new RightSwitchAuto());
-      m_chooser.addObject("Robot Left (Scale)", new LeftScaleAuto());;
-      m_chooser.addObject("Robot Right (Scale)",  new RightScaleAuto());
-      m_chooser.addObject("TestAuto",  new TestAuto());
+      m_chooser.setDefaultOption("No Auto", null);
+      m_chooser.addOption("Only Cross Line", new CrossLineOnlyAuto());
+      m_chooser.addOption("Opposite Switch No Drop", new MiddleSwitchNoDropAuto());
+      m_chooser.addOption("Home Switch From Middle", new MiddleSwitchAuto());
+      m_chooser.addOption("Robot Left (Switch)", new LeftSwitchAuto());
+      m_chooser.addOption("Robot Right (Switch)", new RightSwitchAuto());
+      m_chooser.addOption("Robot Left (Scale)", new LeftScaleAuto());;
+      m_chooser.addOption("Robot Right (Scale)",  new RightScaleAuto());
+      m_chooser.addOption("TestAuto",  new TestAuto());
       SmartDashboard.putData("AutoMode", m_chooser);
 
   //testDist = SmartDashboard.getNumber("Test Distance", 0);
 
       
       //SETTING BRAKE MODE ON DRIVE MOTORS
-      rm.driveTrainFrontLeftWheel.setNeutralMode(NeutralMode.Brake);
-      rm.driveTrainFrontRightWheel.setNeutralMode(NeutralMode.Brake);
-      rm.driveTrainRearLeftWheel.setNeutralMode(NeutralMode.Brake);
-      rm.driveTrainRearRightWheel.setNeutralMode(NeutralMode.Brake);
-      rm.testdriveTrainFrontLeftWheel.setNeutralMode(NeutralMode.Brake);
-      rm.testdriveTrainFrontRightWheel.setNeutralMode(NeutralMode.Brake);
-      rm.testdriveTrainRearLeftWheel.setNeutralMode(NeutralMode.Brake);
-      rm.testdriveTrainRearRightWheel.setNeutralMode(NeutralMode.Brake);
-      rm.testLift.setNeutralMode(NeutralMode.Brake);
-      rm.lift.setNeutralMode(NeutralMode.Brake);
-      rm.climb.setNeutralMode(NeutralMode.Brake);
-      rm.lift.setInverted(true);
-      rm.climb.setInverted(true);
+      RobotMap.driveTrainFrontLeftWheel.setNeutralMode(NeutralMode.Brake);
+      RobotMap.driveTrainFrontRightWheel.setNeutralMode(NeutralMode.Brake);
+      RobotMap.driveTrainRearLeftWheel.setNeutralMode(NeutralMode.Brake);
+      RobotMap.driveTrainRearRightWheel.setNeutralMode(NeutralMode.Brake);
+      RobotMap.testDriveTrainLF.setNeutralMode(NeutralMode.Coast);
+      RobotMap.testDriveTrainRF.setNeutralMode(NeutralMode.Coast);
+      RobotMap.testDriveTrainRR.setNeutralMode(NeutralMode.Coast);
+      RobotMap.testDriveTrainLR.setNeutralMode(NeutralMode.Coast);
+      RobotMap.testLift.setNeutralMode(NeutralMode.Brake);
+      RobotMap.lift.setNeutralMode(NeutralMode.Brake);
+      RobotMap.climb.setNeutralMode(NeutralMode.Brake);
+      RobotMap.lift.setInverted(true);
+      RobotMap.climb.setInverted(true);
 }
 
-  /**
-   * This function is called every robot packet, no matter the mode. Use
-   * this for items like diagnostics that you want ran during disabled,
-   * autonomous, teleoperated and test.
-   *
-   * <p>This runs after the mode specific periodic functions, but before
-   * LiveWindow and SmartDashboard integrated updating.
-   */
   @Override
   public void robotPeriodic() {
   }
@@ -156,12 +150,12 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
     RobotMap.dio8.set(true);
     RobotMap.dio9.set(true);
-    rm.rioGyro.reset();
-      rm.encoderLRear.reset();
-      rm.encoderRRear.reset();
+    RobotMap.rioGyro.reset();
+    RobotMap.encoderLRear.reset();
+    RobotMap.encoderRRear.reset();
     isReversed = true;
     intakeOn = false;
-    m_drive.stopMotor();
+    d_drive.stopMotor();
 
   }
 
@@ -186,12 +180,12 @@ public class Robot extends TimedRobot {
         // schedule the autonomous command (example)
     	//rm.BoxSwitch.reset();
       setLights();
-    	m_drive.setSafetyEnabled(true);
+    	d_drive.setSafetyEnabled(true);
     	//SmartDashboard.getData("Test-Distance");
-		//testDist = SmartDashboard.getNumber("Test-Distance", 0);
-		System.out.println(testDist);
-        autoMode = (Command) m_chooser.getSelected();
-        if (autoMode != null) autoMode.start();
+		  //testDist = SmartDashboard.getNumber("Test-Distance", 0);
+		  System.out.println(testDist);
+      autoMode = (Command) m_chooser.getSelected();
+      if (autoMode != null) autoMode.start();
 
   }
 
@@ -210,10 +204,10 @@ public class Robot extends TimedRobot {
     // continue until interrupted by another command, remove
     // this line or comment it out.
     if (autoMode != null) autoMode.cancel();
-    rm.rioGyro.reset();
+      RobotMap.rioGyro.reset();
       setLights();
-    m_drive.setSafetyEnabled(true);
-    boxSwitch = 0;
+      d_drive.setSafetyEnabled(true);
+      boxSwitch = 0;
 }
 
   /**
@@ -226,11 +220,11 @@ public class Robot extends TimedRobot {
         //SmartDashboard.putNumber("Drum Rotations", rm.BoxSwitch.get()/16384.0);
         //turbo = true;
         if (OI.turbo.get()) {
-        	xDrive = .85;  //0.85;				CHANGE FOR MAIN ROBOT
+        	xDrive = 1;  //0.85;				CHANGE FOR MAIN ROBOT
         }
         
         else {
-        	xDrive = .65;  //0.65;				CHANGE FOR MAIN ROBOT
+        	xDrive = 1;  //0.65;				CHANGE FOR MAIN ROBOT
         }
         
     	//COMPUTE JOYSTICK VALUES GIVING DEADSPACE
@@ -263,7 +257,7 @@ public class Robot extends TimedRobot {
     	//SmartDashboard.putNumber("Gyro Angle", gyroAngle);
     	//SmartDashboard.putNumber("Left Encoder Count", rm.encoderLRear.get());    // PUT BACK
     	//SmartDashboard.putNumber("Right Encoder Count", rm.encoderRRear.get());  //  PUT BACK
-    	m_drive.driveCartesian((Math.pow(mainstickX, 3) * xDrive), (Math.pow(mainstickY, 3) * -xDrive), (Math.pow(mainstickZ, 3) * .6), 0.0);
+    	d_drive.arcadeDrive((Math.pow(-mainstickY, 3) * xDrive), (Math.pow(mainstickZ, 3) * .75));
     	//RobotMap.dio8.pulse(1);
     	//RobotMap.dio9.pulse(0);
   }
