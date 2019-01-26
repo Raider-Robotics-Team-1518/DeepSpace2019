@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj.DigitalOutput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.VictorSP;
 
 
 public class RobotMap {
@@ -40,10 +41,10 @@ public class RobotMap {
 
   		//Drive Train
 			//Test Robot
-	public static WPI_TalonSRX testDriveTrainLF = new WPI_TalonSRX(1);
-	public static WPI_TalonSRX testDriveTrainRF = new WPI_TalonSRX(2);
-	public static WPI_TalonSRX testDriveTrainRR = new WPI_TalonSRX(3); 
-	public static WPI_TalonSRX testDriveTrainLR = new WPI_TalonSRX(4);
+	public static WPI_VictorSPX testDriveTrainLF = new WPI_VictorSPX(1);
+	public static WPI_VictorSPX testDriveTrainRF = new WPI_VictorSPX(2);
+	public static WPI_VictorSPX testDriveTrainRR = new WPI_VictorSPX(3); 
+	public static WPI_VictorSPX testDriveTrainLR = new WPI_VictorSPX(4);
 	
 			//Main Robot
 	public static WPI_VictorSPX driveTrainFrontLeftWheel = new WPI_VictorSPX(1);
@@ -53,13 +54,9 @@ public class RobotMap {
 	
 		//Aux Controllers
 				//Main Robot
-	public static WPI_TalonSRX lift = new WPI_TalonSRX(5);
+	public static VictorSP lift = new VictorSP(0);
 	public static WPI_TalonSRX climb = new WPI_TalonSRX(6);
-	
-				//Test Robot
-	public static WPI_VictorSPX testLift = new WPI_VictorSPX(9);
-	//public static VictorSP testclimb;
-	
+
 		//Speed Controller Groups for Tank Drive
 	public static SpeedControllerGroup left_drive = new SpeedControllerGroup(testDriveTrainLF, testDriveTrainLR);
 	public static SpeedControllerGroup right_drive = new SpeedControllerGroup(testDriveTrainRF, testDriveTrainRR);			

@@ -16,6 +16,7 @@ import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import edu.wpi.cscore.AxisCamera;
 import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoMode.PixelFormat;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
@@ -94,12 +95,13 @@ public class Robot extends TimedRobot {
       
       //Camera setup
       cam0 = CameraServer.getInstance().startAutomaticCapture();
-      cam0.setResolution(160, 120);
-      cam0.setFPS(15);
-      cam0.setBrightness(35);  
-      cam1 = CameraServer.getInstance().addAxisCamera("10.15.18.100");
-      cam1.setResolution(320, 240);
-      cam1.setBrightness(40);
+      //cam0.setResolution(640, 480);
+      cam0.setVideoMode(PixelFormat.kMJPEG, 320, 240, 15);
+      //cam0.setFPS(15);
+      cam0.setBrightness(15);  
+      //cam1 = CameraServer.getInstance().addAxisCamera("10.15.18.100");
+      //cam1.setResolution(320, 240);
+      //cam1.setBrightness(40);
 
       //Get Alliance from FMS
       alliance = DriverStation.getInstance().getAlliance().toString();
@@ -130,8 +132,6 @@ public class Robot extends TimedRobot {
       RobotMap.testDriveTrainRF.setNeutralMode(NeutralMode.Coast);
       RobotMap.testDriveTrainRR.setNeutralMode(NeutralMode.Coast);
       RobotMap.testDriveTrainLR.setNeutralMode(NeutralMode.Coast);
-      RobotMap.testLift.setNeutralMode(NeutralMode.Brake);
-      RobotMap.lift.setNeutralMode(NeutralMode.Brake);
       RobotMap.climb.setNeutralMode(NeutralMode.Brake);
       RobotMap.lift.setInverted(true);
       RobotMap.climb.setInverted(true);
@@ -257,7 +257,7 @@ public class Robot extends TimedRobot {
     	//SmartDashboard.putNumber("Gyro Angle", gyroAngle);
     	//SmartDashboard.putNumber("Left Encoder Count", rm.encoderLRear.get());    // PUT BACK
     	//SmartDashboard.putNumber("Right Encoder Count", rm.encoderRRear.get());  //  PUT BACK
-    	d_drive.arcadeDrive((Math.pow(-mainstickY, 3) * xDrive), (Math.pow(mainstickZ, 3) * .75));
+    	d_drive.arcadeDrive((Math.pow(-mainstickY, 3) * xDrive), (Math.pow(mainstickZ, 3) * .75) + mainstickX);
     	//RobotMap.dio8.pulse(1);
     	//RobotMap.dio9.pulse(0);
   }
