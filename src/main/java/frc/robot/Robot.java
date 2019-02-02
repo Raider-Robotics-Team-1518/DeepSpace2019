@@ -51,6 +51,10 @@ public class Robot extends TimedRobot {
   public static boolean intakeOn;
   public static String alliance = "";
   public static double xDrive;
+  public static double pivotPosition = 0;
+  public static double hzPosition = 0;
+  public static boolean hzUp = false;
+  public static boolean pivotUp = false;
 
   //Joystick Deadspace Controls
   public static double mainstickX;
@@ -59,6 +63,8 @@ public class Robot extends TimedRobot {
 
   // AUX "encoders"
   public static int boxSwitch;
+  //public static int climbEnc;
+  //public static int LiftEnc;
   public static double testDist;
 
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -90,8 +96,6 @@ public class Robot extends TimedRobot {
       RobotMap.encoderLRear.reset();
       RobotMap.encoderRRear.reset();
       turbo=false;
-      boxSwitch = 1;
-      RobotMap.BoxSwitch.reset();
       
       //Camera setup
       cam0 = CameraServer.getInstance().startAutomaticCapture();
@@ -132,9 +136,9 @@ public class Robot extends TimedRobot {
       RobotMap.testDriveTrainRF.setNeutralMode(NeutralMode.Coast);
       RobotMap.testDriveTrainRR.setNeutralMode(NeutralMode.Coast);
       RobotMap.testDriveTrainLR.setNeutralMode(NeutralMode.Coast);
-      RobotMap.climb.setNeutralMode(NeutralMode.Brake);
-      RobotMap.lift.setInverted(true);
-      RobotMap.climb.setInverted(true);
+      //RobotMap.lift.setInverted(true);
+      //RobotMap.climb.setInverted(true);
+  
 }
 
   @Override
@@ -216,8 +220,10 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-        //SmartDashboard.putNumber("Box Encoder", rm.BoxSwitch.get());
-        //SmartDashboard.putNumber("Drum Rotations", rm.BoxSwitch.get()/16384.0);
+         SmartDashboard.putNumber("Gyro Angle", RobotMap.rioGyro.getAngle());
+         SmartDashboard.putNumber("Left Distance", RobotMap.leftHRLV.getAverageVoltage());
+         SmartDashboard.putNumber("RIght Distance", RobotMap.rightHRLV.getAverageVoltage());
+
         //turbo = true;
         if (OI.turbo.get()) {
         	xDrive = 1;  //0.85;				CHANGE FOR MAIN ROBOT

@@ -48,9 +48,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
     mainstick = new Joystick(0);
     liftUp = new JoystickButton(mainstick, 5);
-    liftUp.whileHeld(new BoxLifter(true));	
+    liftUp.whileHeld(new ArmPivot(true));	
     liftDown = new JoystickButton(mainstick, 3);
-    liftDown.whileHeld(new BoxLifter(false));
+    liftDown.whileHeld(new ArmPivot(false));
    /* liftUp2 = new JoystickButton(mainstick, 9);
     liftUp2.whileHeld(new BoxLifter(true));	
     liftDown2 = new JoystickButton(mainstick, 11);
@@ -58,9 +58,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     //fullLiftDown = new JoystickButton(mainstick, 10);
     //fullLiftDown.whenPressed(new BoxLifter(false));
     climbUp = new JoystickButton(mainstick, 6);
-    climbUp.whileHeld(new Climber(true));
+    climbUp.whileHeld(new HzLinear(true));
     climbDown = new JoystickButton(mainstick, 4);
-    climbDown.whileHeld(new Climber (false));
+    climbDown.whileHeld(new HzLinear(false));
     turbo = new JoystickButton(mainstick, 2);
     soleButton0 = new JoystickButton(mainstick, 7);
     soleButton0.whenPressed(new AirActuators(0));
@@ -71,10 +71,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
     gp1 = new XboxController(1);
     gp1ButtonA = new JoystickButton(gp1, 1);
     gp1ButtonY = new JoystickButton(gp1, 4);
-    gp1ButtonA.whileHeld(new Climber(false));
-    gp1ButtonY.whileHeld(new Climber(true));
-    reset = new JoystickButton(mainstick, 12);
-    reset.whenPressed(new LiftCounterReset());
+    gp1ButtonA.whileHeld(new HzLinear(false));
+    gp1ButtonY.whileHeld(new HzLinear(true));
     
   }
   

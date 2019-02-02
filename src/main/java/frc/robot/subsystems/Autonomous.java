@@ -193,7 +193,7 @@ public class Autonomous extends Subsystem {
 		double liftTime = (height/liftInPerSec) + Timer.getFPGATimestamp();
 		//turn on drive motors and lift motor
 		Robot.d_drive.arcadeDrive(AUTO_DRIVE_POWER, 0);
-		RobotMap.lift.set(.75);
+		RobotMap.armPivot.set(.75);
 		
 		while (isDone == false) {
 			currentPosition = (RobotMap.encoderLRear.get() + RobotMap.encoderRRear.get()) /2;
@@ -207,7 +207,7 @@ public class Autonomous extends Subsystem {
 			// check lift far enough
 			if (Timer.getFPGATimestamp() >= liftTime) {
 				highEnough = true;
-				RobotMap.lift.set(0);
+				RobotMap.armPivot.set(0);
 			}
 			isDone = highEnough && farEnough ? true : false;
 		}
@@ -218,27 +218,27 @@ public class Autonomous extends Subsystem {
 		// To measure based on time, a given rate must be known - inches traveled per second
 		// Set the rate in liftInPerSec constant at top of class
 	public void liftUp(double drumRotations) {
-		double startPos = RobotMap.BoxSwitch.get();
+		/*double startPos = RobotMap.BoxSwitch.get();
 		double endPos = startPos + (drumRotations) * 15360;
 		// Adding timeout 
 		double runTime = Timer.getFPGATimestamp() + 4; 
 			while ((RobotMap.BoxSwitch.get() < endPos) && (Timer.getFPGATimestamp() < runTime)) {
-				RobotMap.lift.set(1.0);
+				RobotMap.armPivot.set(1.0);
 				Timer.delay(0.050);
 			}
 			
-			RobotMap.lift.set(0);
+			RobotMap.armPivot.set(0); */
 	}
 	
 	public void liftDown(double drumRotations) {
-	double startPos = RobotMap.BoxSwitch.get();
+	/*double startPos = RobotMap.BoxSwitch.get();
 		double endPos = startPos - (Math.abs(drumRotations) * 15360);
 			while (RobotMap.BoxSwitch.get() > endPos) {
-				RobotMap.lift.set(-1.0);
+				RobotMap.armPivot.set(-1.0);
 				Timer.delay(0.050);
 			}
 			
-			RobotMap.lift.set(0);
+			RobotMap.armPivot.set(0);  */
 	}
 	
 		//Drive Directions
