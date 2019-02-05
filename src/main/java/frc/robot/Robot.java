@@ -54,6 +54,7 @@ public class Robot extends TimedRobot {
   public static double pivotPosition = 0;
   public static double hzPosition = 0;
   public static boolean hzUp = false;
+  public static boolean vtUp = false;
   public static boolean pivotUp = false;
 
   //Joystick Deadspace Controls
@@ -103,9 +104,9 @@ public class Robot extends TimedRobot {
       cam0.setVideoMode(PixelFormat.kMJPEG, 320, 240, 15);
       //cam0.setFPS(15);
       cam0.setBrightness(15);  
-      //cam1 = CameraServer.getInstance().addAxisCamera("10.15.18.100");
-      //cam1.setResolution(320, 240);
-      //cam1.setBrightness(40);
+      cam1 = CameraServer.getInstance().addAxisCamera("10.15.18.100");
+      cam1.setResolution(320, 240);
+      cam1.setBrightness(40);
 
       //Get Alliance from FMS
       alliance = DriverStation.getInstance().getAlliance().toString();
@@ -125,7 +126,6 @@ public class Robot extends TimedRobot {
       SmartDashboard.putData("AutoMode", m_chooser);
 
   //testDist = SmartDashboard.getNumber("Test Distance", 0);
-
       
       //SETTING BRAKE MODE ON DRIVE MOTORS
       RobotMap.driveTrainFrontLeftWheel.setNeutralMode(NeutralMode.Brake);
@@ -220,10 +220,6 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
-         SmartDashboard.putNumber("Gyro Angle", RobotMap.rioGyro.getAngle());
-         SmartDashboard.putNumber("Left Distance", RobotMap.leftHRLV.getAverageVoltage());
-         SmartDashboard.putNumber("RIght Distance", RobotMap.rightHRLV.getAverageVoltage());
-
         //turbo = true;
         if (OI.turbo.get()) {
         	xDrive = 1;  //0.85;				CHANGE FOR MAIN ROBOT
@@ -259,8 +255,10 @@ public class Robot extends TimedRobot {
     	}
       
       // Reading the Gyro angle to display on dashboard and adjust driving conditions
-    	//double gyroAngle = rm.rioGyro.getAngle();
-    	//SmartDashboard.putNumber("Gyro Angle", gyroAngle);
+    	SmartDashboard.putNumber("Gyro Angle", RobotMap.rioGyro.getAngle());
+      SmartDashboard.putNumber("Left Distance", RobotMap.leftHRLV.GetRangeInInches());
+      SmartDashboard.putNumber("RIght Distance", RobotMap.rightHRLV.GetRangeInInches());
+    
     	//SmartDashboard.putNumber("Left Encoder Count", rm.encoderLRear.get());    // PUT BACK
     	//SmartDashboard.putNumber("Right Encoder Count", rm.encoderRRear.get());  //  PUT BACK
     	d_drive.arcadeDrive((Math.pow(-mainstickY, 3) * xDrive), (Math.pow(mainstickZ, 3) * .75) + mainstickX);
