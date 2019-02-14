@@ -6,29 +6,27 @@ import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class HzLinear extends Command {
-
+public class FrontClimb extends Command {
+	
 	boolean mDir;
 	
-	public HzLinear(boolean motorDir) {	// Determine direction of horizontal arm
+	public FrontClimb(boolean motorDir) {	// Determine direction of the front climber
 		// TODO Auto-generated constructor stub
 		mDir = motorDir;
 	}
-
 	protected void execute() {
-		if (mDir == true) {
-			RobotMap.armHz.set(1);	// Arm moves to the left
+		if ((mDir == true)) {
+			RobotMap.frontClimbMotor.set(1);	// Front climber up
 		}
-
-		else if (mDir == false) {
-			RobotMap.armHz.set(-1);	// Arm moves to the right
+		else if ((mDir == false)) {
+			RobotMap.frontClimbMotor.set(-1);	// Front climber down
 		}
 		else {
-		RobotMap.armHz.set(0);
+		RobotMap.frontClimbMotor.set(0);
 		}
 	}
 	protected void end() {
-		RobotMap.armHz.set(0);
+		RobotMap.frontClimbMotor.set(0);
 	}
 	@Override
 	protected boolean isFinished() {

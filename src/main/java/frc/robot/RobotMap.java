@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.VictorSP;
 import frc.robot.subsystems.*;
 
 
@@ -41,36 +42,33 @@ public class RobotMap {
   // public static int rangefinderModule = 1;
 
   		//Drive Train
-			//Test Robot
-	public static WPI_VictorSPX testDriveTrainLF = new WPI_VictorSPX(1);
-	public static WPI_VictorSPX testDriveTrainRF = new WPI_VictorSPX(2);
-	public static WPI_VictorSPX testDriveTrainRR = new WPI_VictorSPX(3); 
-	public static WPI_VictorSPX testDriveTrainLR = new WPI_VictorSPX(4);
-	
-			//Main Robot
-	public static WPI_VictorSPX driveTrainFrontLeftWheel = new WPI_VictorSPX(1);
-	public static WPI_VictorSPX driveTrainFrontRightWheel = new WPI_VictorSPX(2);
-	public static WPI_VictorSPX driveTrainRearRightWheel = new WPI_VictorSPX(3);
-	public static WPI_VictorSPX driveTrainRearLeftWheel = new WPI_VictorSPX(4);
+	public static WPI_VictorSPX driveTrainLF = new WPI_VictorSPX(1);
+	public static WPI_VictorSPX driveTrainRF = new WPI_VictorSPX(2);
+	public static WPI_VictorSPX driveTrainRR = new WPI_VictorSPX(3); 
+	public static WPI_VictorSPX driveTrainLR = new WPI_VictorSPX(4);
 	
 		//Aux Controllers
-				//Main Robot
-	public static WPI_TalonSRX armPivot = new WPI_TalonSRX(7);
-	public static WPI_TalonSRX armHz = new WPI_TalonSRX(6);
 	public static WPI_TalonSRX armVT = new WPI_TalonSRX(5);
-	public static Spark intakeMotor = new Spark(1);
-
+	public static WPI_TalonSRX armHz = new WPI_TalonSRX(6);
+	public static WPI_TalonSRX armPivot = new WPI_TalonSRX(7);
+	public static WPI_TalonSRX frontClimbMotor = new WPI_TalonSRX(8);
+	public static WPI_TalonSRX rearClimbMotor = new WPI_TalonSRX(9);
+	public static WPI_TalonSRX intakeMotor = new WPI_TalonSRX(10);
+	public static VictorSP rearClimbWheel1 = new VictorSP(0);
+	public static VictorSP rearClimbWheel2 = new VictorSP(1);
+	
 		//Speed Controller Groups for Tank Drive
-	public static SpeedControllerGroup left_drive = new SpeedControllerGroup(testDriveTrainLF, testDriveTrainLR);
-	public static SpeedControllerGroup right_drive = new SpeedControllerGroup(testDriveTrainRF, testDriveTrainRR);			
+	public static SpeedControllerGroup left_drive = new SpeedControllerGroup(driveTrainLF, driveTrainLR);
+	public static SpeedControllerGroup right_drive = new SpeedControllerGroup(driveTrainRF, driveTrainRR);
+	public static SpeedControllerGroup climb_drive = new SpeedControllerGroup(frontClimbMotor, rearClimbMotor);			
 	
 		//Solenoids
-	public static Solenoid solenoid0 = new Solenoid(1);
-	public static Solenoid solenoid1 = new Solenoid(2);
-	public static Solenoid solenoid2 = new Solenoid(3);
-	public static Solenoid solenoid3 = new Solenoid(4);
-	public static Solenoid solenoid4 = new Solenoid(5);
-	public static Solenoid solenoid5 = new Solenoid(6);
+	public static Solenoid solenoid0 = new Solenoid(3); //put all positions back where they belong
+	public static Solenoid solenoid1 = new Solenoid(4);
+	public static Solenoid solenoid2 = new Solenoid(5);
+	public static Solenoid solenoid3 = new Solenoid(6);
+	public static Solenoid solenoid4 = new Solenoid(1);
+	public static Solenoid solenoid5 = new Solenoid(2);
 	
 		//Encoders
 	public static Encoder encoderLRear = new Encoder(0, 1, true, Encoder.EncodingType.k1X);

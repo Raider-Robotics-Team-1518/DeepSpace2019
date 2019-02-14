@@ -56,6 +56,7 @@ public class Robot extends TimedRobot {
   public static boolean hzUp = false;
   public static boolean vtUp = false;
   public static boolean pivotUp = false;
+  public static boolean climbFullExt = false;
 
   //Joystick Deadspace Controls
   public static double mainstickX;
@@ -63,7 +64,6 @@ public class Robot extends TimedRobot {
   public static double mainstickZ;
 
   // AUX "encoders"
-  public static int boxSwitch;
   //public static int climbEnc;
   //public static int LiftEnc;
   public static double testDist;
@@ -127,22 +127,19 @@ public class Robot extends TimedRobot {
 
   //testDist = SmartDashboard.getNumber("Test Distance", 0);
       
-      //SETTING BRAKE MODE ON DRIVE MOTORS
-      RobotMap.driveTrainFrontLeftWheel.setNeutralMode(NeutralMode.Brake);
-      RobotMap.driveTrainFrontRightWheel.setNeutralMode(NeutralMode.Brake);
-      RobotMap.driveTrainRearLeftWheel.setNeutralMode(NeutralMode.Brake);
-      RobotMap.driveTrainRearRightWheel.setNeutralMode(NeutralMode.Brake);
-      RobotMap.testDriveTrainLF.setNeutralMode(NeutralMode.Coast);
-      RobotMap.testDriveTrainRF.setNeutralMode(NeutralMode.Coast);
-      RobotMap.testDriveTrainRR.setNeutralMode(NeutralMode.Coast);
-      RobotMap.testDriveTrainLR.setNeutralMode(NeutralMode.Coast);
-      //RobotMap.lift.setInverted(true);
-      //RobotMap.climb.setInverted(true);
+    //SETTING BRAKE MODE ON DRIVE MOTORS
+    RobotMap.driveTrainLF.setNeutralMode(NeutralMode.Brake);
+    RobotMap.driveTrainRF.setNeutralMode(NeutralMode.Brake);
+    RobotMap.driveTrainRR.setNeutralMode(NeutralMode.Brake);
+    RobotMap.driveTrainLR.setNeutralMode(NeutralMode.Brake);
   
 }
 
   @Override
   public void robotPeriodic() {
+    SmartDashboard.putNumber("Left Distance", RobotMap.leftHRLV.GetRangeInInches());
+    SmartDashboard.putNumber("RIght Distance", RobotMap.rightHRLV.GetRangeInInches());
+
   }
 
   /**
@@ -211,8 +208,7 @@ public class Robot extends TimedRobot {
       RobotMap.rioGyro.reset();
       setLights();
       d_drive.setSafetyEnabled(true);
-      boxSwitch = 0;
-}
+  }
 
   /**
    * This function is called periodically during operator control.
@@ -221,12 +217,12 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
         //turbo = true;
-        if (OI.turbo.get()) {
+        if (OI.turbo.get() == false) {
         	xDrive = 1;  //0.85;				CHANGE FOR MAIN ROBOT
         }
         
         else {
-        	xDrive = 1;  //0.65;				CHANGE FOR MAIN ROBOT
+        	xDrive = .5;  //0.65;				CHANGE FOR MAIN ROBOT
         }
         
     	//COMPUTE JOYSTICK VALUES GIVING DEADSPACE
@@ -260,36 +256,41 @@ public class Robot extends TimedRobot {
       SmartDashboard.putNumber("RIght Distance", RobotMap.rightHRLV.GetRangeInInches());
     
     	//SmartDashboard.putNumber("Left Encoder Count", rm.encoderLRear.get());    // PUT BACK
-    	//SmartDashboard.putNumber("Right Encoder Count", rm.encoderRRear.get());  //  PUT BACK
-    	d_drive.arcadeDrive((Math.pow(-mainstickY, 3) * xDrive), (Math.pow(mainstickZ, 3) * .75) + mainstickX);
-    	//RobotMap.dio8.pulse(1);
+      //SmartDashboard.putNumber("Right Encoder Count", rm.encoderRRear.get());  //  PUT BACK
+      d_drive.arcadeDrive((Math.pow(-mainstickY, 3) * xDrive), (Math.pow(mainstickZ, 3) * .75) + mainstickX);
+      
+      //Control for the wheels on the lift legs - only available when lift is fully extended
+      if(climbFullExt) {
+        RobotMap.rearClimbWheel1.set(OI.gp1.getY());
+        RobotMap.rearClimbWheel2.set(OI.gp1.getY());
+      }
+      else {
+        RobotMap.rearClimbWheel1.set(0);
+        RobotMap.rearClimbWheel2.set(0);
+      }
+      
+      //RobotMap.dio8.pulse(1);
     	//RobotMap.dio9.pulse(0);
   }
-
   /**
    * This function is called periodically during test mode.
    */
   @Override
   public void testPeriodic() {
   }
-
   public void setLights() {
     alliance = DriverStation.getInstance().getAlliance().toString();
-  if (alliance == "Red") {
-    RobotMap.dio8.set(false);
-    RobotMap.dio9.set(true);
-     }
-  
-  else if (alliance == "Blue"){
+    if (alliance == "Red") {
+      RobotMap.dio8.set(false);
+      RobotMap.dio9.set(true);
+    }
+    else if (alliance == "Blue"){
     RobotMap.dio8.set(true);
     RobotMap.dio9.set(false);
+    }
+    else {
+      RobotMap.dio8.set(true);
+      RobotMap.dio9.set(true);
+    } 
   }
-  
-  else {
-    RobotMap.dio8.set(true);
-    RobotMap.dio9.set(true);
-     }
-  
-}
-
 }

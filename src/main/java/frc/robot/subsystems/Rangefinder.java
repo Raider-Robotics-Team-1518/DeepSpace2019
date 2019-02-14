@@ -23,9 +23,9 @@ public class Rangefinder extends InterruptableSensorBase implements LiveWindowSe
         //default values
 		use_units = true;
 		min_voltage = .28;
-		voltage_range = 4.8 - min_voltage;
-		min_distance = 10;
-		distance_range = 200.0 - min_distance;
+		voltage_range = 4.69 - min_voltage;
+		min_distance = 11.5;
+		distance_range = 245.5 - min_distance;
     }
     //constructor
     public Rangefinder(int _channel, boolean _use_units, double _min_voltage,

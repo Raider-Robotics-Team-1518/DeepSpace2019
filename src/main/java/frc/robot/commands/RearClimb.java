@@ -6,30 +6,31 @@ import frc.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
 
-public class WheelMan extends Command {
+public class RearClimb extends Command {
 	
 	//WPI_TalonSRX climbMotor = RobotMap.climb;
 	boolean mDir;
 	
-	public WheelMan(boolean motorDir) {
+	public RearClimb(boolean motorDir) {	// Determine direction of the rear climber
 		// TODO Auto-generated constructor stub
 		mDir = motorDir;
 	}
 
 	protected void execute() {
 		if ((mDir == true)) {
-			RobotMap.intakeMotor.set(1);
+			RobotMap.rearClimbMotor.set(1);		// Rear climber up
 		}
 
 		else if ((mDir == false)) {
-			RobotMap.intakeMotor.set(-1);
+			RobotMap.rearClimbMotor.set(-1);	// Rear climber down
 		}
 		else {
-		RobotMap.intakeMotor.set(0);
+		RobotMap.rearClimbMotor.set(0);
 		}
 	}
+	
 	protected void end() {
-		RobotMap.intakeMotor.set(0);
+		RobotMap.rearClimbMotor.set(0);
 	}
 	@Override
 	protected boolean isFinished() {

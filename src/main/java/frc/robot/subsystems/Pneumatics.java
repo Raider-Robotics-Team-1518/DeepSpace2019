@@ -5,14 +5,11 @@ import frc.robot.RobotMap;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
-public class Pneumatics extends Subsystem{
+public class Pneumatics extends Subsystem {		// Dertermines names for Solenoids
 	public static final Solenoid one = RobotMap.solenoid0;
 	public static final Solenoid two = RobotMap.solenoid1;
 	public static final Solenoid three = RobotMap.solenoid2;
 	public static final Solenoid four = RobotMap.solenoid3;
-	public static final Solenoid five = RobotMap.solenoid4;
-	public static final Solenoid six = RobotMap.solenoid5;
-
 	
 	public Pneumatics() {
 		// TODO Auto-generated constructor stub
@@ -26,7 +23,5 @@ public class Pneumatics extends Subsystem{
 		two.set(false);
 		three.set(true);
 		four.set(false);
-		five.set(true);
-		six.set(false);
 	}
 }

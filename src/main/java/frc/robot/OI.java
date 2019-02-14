@@ -10,6 +10,7 @@ package frc.robot;
 import frc.robot.commands.*;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.GamepadBase;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -28,57 +29,72 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
  public class OI {
   public static Joystick mainstick;
-  public static JoystickButton soleButton1;
-  public static JoystickButton soleButton2;
+  public static XboxController gp1;
+  public static JoystickButton ballClaw;
+  public static JoystickButton hatchClaw;
   public static JoystickButton armPivUp;
   public static JoystickButton armPivDown;
-  public static JoystickButton armLeft;
-  public static JoystickButton armRight;
+  public static JoystickButton armLeft0;
+  public static JoystickButton armRight0;
+  public static JoystickButton armLeft1;
+  public static JoystickButton armRight1;
   public static JoystickButton armUp;
   public static JoystickButton armDown;
   public static JoystickButton eatBall;
   public static JoystickButton vomitBall;
   public static JoystickButton turbo;
-  public static XboxController gp1;
-  public static JoystickButton gp1ButtonA;
-  public static JoystickButton gp1ButtonY;
-  public static JoystickButton reset;
-
+  public static JoystickButton frontClimbWheelsUp;
+  public static JoystickButton frontClimbWheelsDown;
+  public static JoystickButton rearClimbWheelsUp;
+  public static JoystickButton rearClimbWheelsDown;
+  public static JoystickButton climbWheelsForward;
+  public static JoystickButton climbWheelsBackward;
+  
   public OI() {
 
+      // Main Joystick               Assigning buttons to the joystick
     mainstick = new Joystick(0);
-    armPivUp = new JoystickButton(mainstick, 5);
-    armPivUp.whileHeld(new ArmPivot(true));	
-    armPivDown = new JoystickButton(mainstick, 3);
-    armPivDown.whileHeld(new ArmPivot(false));
-    armLeft = new JoystickButton(mainstick, 6);
-    armLeft.whileHeld(new HzLinear(true));
-    armRight = new JoystickButton(mainstick, 4);
-    armRight.whileHeld(new HzLinear(false));
-    armUp = new JoystickButton(mainstick, 10);
-    armUp.whileHeld(new VtLifter(true));
-    armDown = new JoystickButton(mainstick, 12);
-    armDown.whileHeld(new VtLifter(false));
-    eatBall = new JoystickButton(mainstick, 7);
-    eatBall.whileHeld(new WheelMan(true));
-    vomitBall = new JoystickButton(mainstick, 8);
-    vomitBall.whileHeld(new WheelMan(false));
     turbo = new JoystickButton(mainstick, 2);
-    soleButton1 = new JoystickButton(mainstick, 9);
-    soleButton1.whenPressed(new AirActuators(1));
-    soleButton2 = new JoystickButton(mainstick, 11);
-    soleButton2.whenPressed(new AirActuators(2));
-/*    gp1 = new XboxController(1);
-    gp1ButtonA = new JoystickButton(gp1, 1);
-    gp1ButtonY = new JoystickButton(gp1, 4);
-    gp1ButtonA.whileHeld(new HzLinear(false));
-    gp1ButtonY.whileHeld(new HzLinear(true));
-    */
+    armPivUp = new JoystickButton(mainstick, 6);
+    armPivUp.whileHeld(new ArmPivot(true));	
+    armPivDown = new JoystickButton(mainstick, 4);
+    armPivDown.whileHeld(new ArmPivot(false));
+    armUp = new JoystickButton(mainstick, 5);
+    armUp.whileHeld(new VtLifter(true));
+    armDown = new JoystickButton(mainstick, 3);
+    armDown.whileHeld(new VtLifter(false));
+    eatBall = new JoystickButton(mainstick, 8);
+    eatBall.whileHeld(new BallMan(true));
+    vomitBall = new JoystickButton(mainstick, 7);
+    vomitBall.whileHeld(new BallMan(false));
+    ballClaw = new JoystickButton(mainstick, 1);
+    ballClaw.whenPressed(new AirActuators(true));
+    armLeft1 = new JoystickButton(mainstick, 9);
+    armLeft1.whileHeld(new HzLinear(true));
+    armRight1 = new JoystickButton(mainstick, 10);
+    armRight1.whileHeld(new HzLinear(false));
+
+      // Logitech Controller         Assigning buttons to the gamepad
+    gp1 = new XboxController(1);
+    frontClimbWheelsUp = new JoystickButton(gp1, 5);
+    frontClimbWheelsUp.whileHeld(new FrontClimb(true));
+    frontClimbWheelsDown = new JoystickButton(gp1, 7);
+    frontClimbWheelsDown.whileHeld(new FrontClimb(false));
+    rearClimbWheelsUp = new JoystickButton(gp1, 6);
+    rearClimbWheelsUp.whileHeld(new RearClimb(true));
+    rearClimbWheelsDown = new JoystickButton(gp1, 8);
+    rearClimbWheelsDown.whileHeld(new RearClimb(false));
+    climbWheelsForward = new JoystickButton(gp1, 3);
+    climbWheelsForward.whileHeld(new ClimbWheels(true));
+    climbWheelsBackward = new JoystickButton(gp1, 2);
+    climbWheelsBackward.whileHeld(new ClimbWheels(false));
+    armLeft0 = new JoystickButton(gp1, 9);
+    armLeft0.whileHeld(new HzLinear(true));
+    armRight0 = new JoystickButton(gp1, 10);
+    armRight0.whileHeld(new HzLinear(false));
   }
-  
   public final void init() {
     SmartDashboard.putData("Autonomous Command", new MiddleSwitchNoDropAuto());
-      Robot.feedSpeed = mainstick.getThrottle();
+    Robot.feedSpeed = mainstick.getThrottle();
   }
-
 }
