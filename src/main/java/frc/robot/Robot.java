@@ -57,6 +57,10 @@ public class Robot extends TimedRobot {
   public static boolean vtUp = false;
   public static boolean pivotUp = false;
   public static boolean climbFullExt = false;
+  public static boolean clawOpen = true;
+  public static boolean grabbing = true;
+  public static boolean hasHatch = false;
+  public static int airStage = 1 ;
 
   //Joystick Deadspace Controls
   public static double mainstickX;
@@ -184,7 +188,7 @@ public class Robot extends TimedRobot {
     	d_drive.setSafetyEnabled(true);
     	//SmartDashboard.getData("Test-Distance");
 		  //testDist = SmartDashboard.getNumber("Test-Distance", 0);
-		  System.out.println(testDist);
+		  //System.out.println(testDist);
       autoMode = (Command) m_chooser.getSelected();
       if (autoMode != null) autoMode.start();
 
@@ -207,7 +211,15 @@ public class Robot extends TimedRobot {
     if (autoMode != null) autoMode.cancel();
       RobotMap.rioGyro.reset();
       setLights();
+      Pneumatics.one.set(true);
+      Pneumatics.two.set(false);
+      Pneumatics.three.set(true);
+      Pneumatics.four.set(false);
+      airStage = 3;
       d_drive.setSafetyEnabled(true);
+      clawOpen = true;
+      grabbing = true;
+      hasHatch = false;
   }
 
   /**

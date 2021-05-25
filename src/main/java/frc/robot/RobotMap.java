@@ -63,12 +63,10 @@ public class RobotMap {
 	public static SpeedControllerGroup climb_drive = new SpeedControllerGroup(frontClimbMotor, rearClimbMotor);			
 	
 		//Solenoids
-	public static Solenoid solenoid0 = new Solenoid(3); //put all positions back where they belong
-	public static Solenoid solenoid1 = new Solenoid(4);
-	public static Solenoid solenoid2 = new Solenoid(5);
-	public static Solenoid solenoid3 = new Solenoid(6);
-	public static Solenoid solenoid4 = new Solenoid(1);
-	public static Solenoid solenoid5 = new Solenoid(2);
+	public static Solenoid solenoid0 = new Solenoid(1); //put all positions back where they belong
+	public static Solenoid solenoid1 = new Solenoid(2);
+	public static Solenoid solenoid2 = new Solenoid(3);
+	public static Solenoid solenoid3 = new Solenoid(4);
 	
 		//Encoders
 	public static Encoder encoderLRear = new Encoder(0, 1, true, Encoder.EncodingType.k1X);
